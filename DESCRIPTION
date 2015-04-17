@@ -1,0 +1,9 @@
+Package: mypopgen
+Type: Package
+Title: popgen R functions
+Version: 1.0
+Date: 2015-04-10
+Author: Matthew Murray
+Maintainer: Matthew Murray <mmurray7@wisc.edu>
+Description: My functions for use in my pipline
+License: GPL-3

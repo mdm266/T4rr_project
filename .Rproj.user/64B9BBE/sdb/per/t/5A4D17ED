@@ -1,0 +1,16 @@
+{
+    "contents" : "Package: mypopgen\nType: Package\nTitle: popgen R functions\nVersion: 1.0\nDate: 2015-04-10\nAuthor: Matthew Murray\nMaintainer: Matthew Murray <mmurray7@wisc.edu>\nDescription: My functions for use in my pipline\nLicense: GPL-3\n",
+    "created" : 1428681035788.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1024250038",
+    "id" : "5A4D17ED",
+    "lastKnownWriteTime" : 1429237373,
+    "path" : "~/Documents/classes/Tools4RR/T4rr_project/my_popgen/my_popgen/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "dcf"
+}
