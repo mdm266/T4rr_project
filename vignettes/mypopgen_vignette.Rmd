@@ -1,0 +1,82 @@
+---
+title: "mypopgen Package Vignette"
+author: "Matthew Murray"
+date: "`Sys.Date()`"
+output: html_document
+---
+
+A vignette for the use of the mypopgen package. Illistrated with made up data. 
+
+```{r setup, echo=FALSE}
+my_seg_sites<-function(my_seqs){
+	len<-dim(my_seqs)[1]
+	sites<-vector()
+	for (i in 2:len){
+		sites<- c(sites,which(my_seqs[i,] != my_seqs[1,]))
+	}
+	return(unique(sort(sites)))
+}
+
+# calculate nucleotide diversity 
+# all combinations method 
+my_pi<- function(my_seqs){
+	n=dim(my_seqs)[1]
+	all_combs=as.data.frame(combn(seq(1,n),2))
+	pis<-vector()
+	for (i in 1:length(all_combs)){
+		pis<- c(pis, 
+		sum(my_seqs[all_combs[1,i],] !=my_seqs[all_combs[2,i],])/
+			length(my_seqs[all_combs[i,2],]))
+	}
+	return(sum(pis))
+}
+```
+
+Creating some data to play with. 
+
+```{r}
+bases<- c("A","T","C","G")
+seq1 <- sample(bases,1000, replace=TRUE)
+seqs<- as.data.frame(matrix(NA,nrow=9,ncol=1000))
+seqs[1,]<-seq1
+for ( i in 2:10){
+snps<- sample(bases,3, replace=TRUE)
+snp_pos<-sample(seq(1,1000),3)
+seq2<- seq1
+seq2[snp_pos]<-snps
+seqs[i,]<-seq2
+}
+```
+ Take a look at the theoretical 1 kb of sequence created
+```{r Sequence}
+seq1
+```
+
+Here is a snippit of multiple samples, somehting similar to a potential real dataset
+```{r}
+seqs[1:10,1:20]
+```
+
+Now we can find which sites in our kb or sequence using the "my_seg_sites" function
+```{r my_seg_sites}
+my_seg_sites(seqs)
+```
+
+Now if we pull out the positions that are segregating to take a look. We can see all of these sites have at least one snp. 
+```{r, results='hold'}
+sites<- my_seg_sites(seqs)
+seqs[,sites]
+```
+
+Now we can take all of these sites and calculate nucleotide diversity using the "my_pi" funciton. 
+```{r}
+my_pi(seqs)
+```
+
+
+
+
+
+
+
+
