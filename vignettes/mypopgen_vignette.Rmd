@@ -1,8 +1,12 @@
 ---
 title: "mypopgen Package Vignette"
 author: "Matthew Murray"
-date: "`Sys.Date()`"
-output: html_document
+date: "2015-05-07"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mypopgen Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8](inputenc)
 ---
 
 A vignette for the use of the mypopgen package. Illistrated with made up data. 
@@ -29,6 +33,23 @@ my_pi<- function(my_seqs){
 			length(my_seqs[all_combs[i,2],]))
 	}
 	return(sum(pis))
+}
+# major allele freq calculation
+my_allele_freq<-function(my_seqs){
+	sites=my_seg_sites(my_seqs)
+	allele.freq=rep(NA,length(sites))
+	for (i in 1:length(sites)){
+		freq=max(table(my_seqs[,sites[1]]))/ sum(table(my_seqs[,sites[i]]))
+		allele.freq[i]<-freq
+	}
+	return(allele.freq)
+}
+my_Fst<- function(r,n,p){
+	n_bar<-sum(n/r) # average sample size 
+avg_p<- sum((n*p)/(r*n_bar)) # average allele freq of major allele
+S2<- sum((n*((p-avg_p)^2))/((r-1)*n_bar))
+Fst<- S2/((avg_p)*(1-avg_p))
+return (Fst)
 }
 ```
 
@@ -73,10 +94,53 @@ Now we can take all of these sites and calculate nucleotide diversity using the 
 my_pi(seqs)
 ```
 
+Now look at Fst between pairs of markers. 
+
+First we create a second "population" to test. Here we create a two loci that are segregating, and create two population that start at the same frequency and then move away. 
+```{r}
+m1_p1<- data.frame(sample(c(rep("A",50),rep("C",50))))
+m1_p2<- data.frame(sample(c(rep("A",50),rep("C",50))))
+m2_p1<- data.frame(sample(c(rep("A",50),rep("C",50))))
+m2_p2<- data.frame(sample(c(rep("A",50),rep("C",50))))
+```
+
+Now we need to calculate major allele frequency, we can do this by using the "my_allele_freq" function. This gives us what we would expect, an allele frequency of 0.5 for wach site. 
+```{r allele freq}
+my_allele_freq(m1_p1)
+freq_1_1= my_allele_freq(m1_p1)
+freq_1_2= my_allele_freq(m1_p2)
+freq_2_1= my_allele_freq(m2_p1)
+freq_2_2= my_allele_freq(m2_p2)
+```
 
 
+Calculate the fst between populations at each snp 
+```{r Fst}
+my_Fst(2, c(50,50), c(freq_1_1,freq_1_2))
+my_Fst(2, c(50,50), c(freq_2_1,freq_2_2))
+```
+We can see here that the two population have the same allele frequencies and are not two seperate populations, based on these markers at this time. 
+
+Now if we apply some type of selcetion at one of the loci, we can see the Fst shift. 
+```{r}
+m1_p1<- data.frame(sample(c(rep("A",50),rep("C",50))))
+m1_p2<- data.frame(sample(c(rep("A",50),rep("C",50))))
+m2_p1<- data.frame(sample(c(rep("A",50),rep("C",50))))
+m2_p2<- data.frame(sample(c(rep("A",50),rep("C",50))))
+
+selects<-sample(which(m1_p1 == "A"), size= length(which(m1_p1 == "A"))/3)
+m1_p1[selects,]<-"C"
 
 
+freq_1_1= my_allele_freq(m1_p1)
+freq_1_2= my_allele_freq(m1_p2)
+freq_2_1= my_allele_freq(m2_p1)
+freq_2_2= my_allele_freq(m2_p2)
 
-
+#Marker 1
+my_Fst(2, c(50,50), c(freq_1_1,freq_1_2))
+#Marker 2
+my_Fst(2, c(50,50), c(freq_2_1,freq_2_2))
+```
+After this simulated selection, the Fst at marker1 has changed, and gone up, so the two popultaions are now more different than they were before. 
 

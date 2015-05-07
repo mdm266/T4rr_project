@@ -29,13 +29,25 @@ my_pi<- function(my_seqs){
 	}
 	return(sum(pis))
 }
+
+# major allele freq calculation
+my_allele_freq<-function(my_seqs){
+	sites=my_seg_sites(my_seqs)
+	allele.freq=rep(NA,length(sites))
+	for (i in 1:length(sites)){
+		freq=max(table(my_seqs[,sites[1]]))/ sum(table(my_seqs[,sites[i]]))
+		allele.freq[i]<-freq
+	}
+	return(allele.freq)
+}
+
 # calculate pairwise fst 
 # Weir and Cockerham 1984
 # give number of populations, number of individuals in each pop., 
 # and major allele frequency
 my_Fst<- function(r,n,p){
 	n_bar<-sum(n/r) # average sample size 
-avg_p< sum((n*p)/(r*n-bar)) # average allele freq of major allele
+avg_p<- sum((n*p)/(r*n_bar)) # average allele freq of major allele
 S2<- sum((n*((p-avg_p)^2))/((r-1)*n_bar))
 Fst<- S2/((avg_p)*(1-avg_p))
 return (Fst)
