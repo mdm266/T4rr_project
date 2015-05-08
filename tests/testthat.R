@@ -1,2 +1,2 @@
 library(testthat)
-test_check("broman")
+test_check("mypopgen")
