@@ -16,25 +16,22 @@ Version: \tab 1.0\cr
 Date: \tab 2015-04-10\cr
 License: \tab GPL-3\cr
 }
-These functions take sequence information in the form of a data frame in R. Each row is a separate individual. Currently no missing data, and single base/sites calls. 
+These functions take sequence information in the form of a data frame in R. Each row is a separate individual. Currently no missing data, and single base/sites calls.
 
 Can find segregating sites, and pi of all individuals.
 }
 \author{
-Matthew Murray 
+Matthew Murray
 
 Matthew Murray <mmurray7@wisc.edu>
 }
-\references{
-}
 
 \keyword{ package }
-\seealso{
-}
+
 \examples{
-# test data 
-# create example sequence 
-# this creates 1kb of sequences and I added some random snps 
+# test data
+# create example sequence
+# this creates 1kb of sequences and I added some random snps
 # this is not real data
 bases<- c("A","T","C","G")
 seq1 <- sample(bases,1000, replace=TRUE)
