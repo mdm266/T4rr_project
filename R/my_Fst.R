@@ -11,8 +11,6 @@
 #' @return Pairwise Fst
 #' 
 #' @references Weir and Cockerham 1984
-
-
 my_Fst<- function(r,n,p){
 	n_bar<-sum(n/r) # average sample size 
 avg_p<- sum((n*p)/(r*n_bar)) # average allele freq of major allele

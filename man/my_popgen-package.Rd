@@ -21,15 +21,7 @@ These functions take sequence information in the form of a data frame in R. Each
 Can find segregating sites, and pi of all individuals.
 }
 \author{
-Matthew Murray 
-
 Matthew Murray <mmurray7@wisc.edu>
-}
-\references{
-}
-
-\keyword{ package }
-\seealso{
 }
 \examples{
 # test data 

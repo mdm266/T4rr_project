@@ -7,5 +7,5 @@ Author: Matthew Murray
 Maintainer: Matthew Murray <mmurray7@wisc.edu>
 Description: My functions for use in my pipline
 License: GPL-3
-Suggests: knitr, rmarkdown
+Suggests: knitr, rmarkdown, testthat
 VignetteBuilder: knitr
